@@ -33,3 +33,7 @@ http://localhost:8000/api/documentation
 ## Если используется PhpStorm 
 
 Описание API можно найти: storage/api-docs/api-docs.yml
+
+## Тесты
+
+php artisan test
