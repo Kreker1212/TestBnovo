@@ -3,10 +3,10 @@ POST http://localhost:8000/api/guests
 Content-Type: application/json
 
 {
-    "first_name": "Alex",
-    "last_name": "Don",
-    "phone": "+7779058511",
-    "email": "www.alex@example.com"
+    "first_name": "kkkkkkk",
+    "last_name": "kkkkkk",
+    "phone": "+7779058518",
+    "email": "kkkkkk.alex@example.com"
 }
 
 ### Получить список гостей
@@ -14,21 +14,21 @@ GET http://localhost:8000/api/guests
 Content-Type: application/json
 
 ### Получить гостя по ID
-GET http://localhost:8000/api/guests/1
+GET http://localhost:8000/api/guests/3
 Content-Type: application/json
 
 ### Обновить гостя по ID
-PUT http://localhost:8000/api/guests/1
+PUT http://localhost:8000/api/guests/3
 Content-Type: application/json
 
 {
-    "first_name": "Jane",
-    "last_name": "Doe",
-    "phone": "+0987654321",
-    "email": "jane.doe@example.com",
+    "first_name": "lal",
+    "last_name": "lal",
+    "phone": "+0987654325",
+    "email": "lal.doe@example.com",
     "country": "Canada"
 }
 
 ### Удалить гостя по ID
-DELETE http://localhost:8000/api/guests/1
+DELETE http://localhost:8000/api/guests/3
 Content-Type: application/json
