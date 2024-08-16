@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Guest Management API
+  description: |
+    API для управления гостями, включая создание, получение, обновление и удаление записей.
+    У каждого гостя есть обязательные поля: имя, фамилия, телефон и email. Поля phone и email должны быть уникальными.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api
+    description: Локальный сервер разработки
+paths:
+  /guests:
+    get:
+      summary: Получить список всех гостей
+      tags:
+        - Guests
+      responses:
+        '200':
+          description: Список гостей
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Guest'
+    post:
+      summary: Создать нового гостя
+      tags:
+        - Guests
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGuestRequest'
+      responses:
+        '201':
+          description: Гость успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+  /guests/{id}:
+    get:
+      summary: Получить данные гостя по ID
+      tags:
+        - Guests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Данные гостя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+        '404':
+          description: Гость не найден
+    put:
+      summary: Обновить данные гостя по ID
+      tags:
+        - Guests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateGuestRequest'
+      responses:
+        '200':
+          description: Гость успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Guest'
+        '404':
+          description: Гость не найден
+    delete:
+      summary: Удалить гостя по ID
+      tags:
+        - Guests
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Гость успешно удален
+        '404':
+          description: Гость не найден
+components:
+  schemas:
+    Guest:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        country:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    CreateGuestRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        phone:
+          type: string
+          example: "+71234567890"
+        email:
+          type: string
+          example: john.doe@example.com
+        country:
+          type: string
+          example: Russia
+    UpdateGuestRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        phone:
+          type: string
+          example: "+71234567890"
+        email:
+          type: string
+          example: john.doe@example.com
+        country:
+          type: string
+          example: Russia
