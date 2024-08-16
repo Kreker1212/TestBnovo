@@ -19,26 +19,28 @@ class GuestController extends Controller
 
     public function index(): JsonResponse
     {
-       return $this->service->index();
+       return response()->json($this->service->index());
     }
 
     public function show(int $id): JsonResponse
     {
-        return $this->service->show($id);
+        return response()->json($this->service->show($id));
     }
 
     public function store(StoreGuestRequest $request): JsonResponse
     {
-        return $this->service->store($request);
+        return response()->json($this->service->store($request));
     }
 
     public function update(UpdateGuestRequest $request, int $id): JsonResponse
     {
-        return $this->service->update($request, $id);
+        return response()->json($this->service->update($request, $id));
     }
 
     public function destroy(int $id): JsonResponse
     {
-        return $this->service->destroy($id);
+        $this->service->destroy($id);
+
+        return response()->json(null, 204);
     }
 }

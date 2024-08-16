@@ -6,28 +6,27 @@ use App\Http\Requests\StoreGuestRequest;
 use App\Http\Requests\UpdateGuestRequest;
 use App\Interface\GuestServiceInterface;
 use App\Models\Guest;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
 
 class GuestService implements GuestServiceInterface
 {
-    public function index(): JsonResponse
+    public function index(): Collection
     {
-        return response()->json(Guest::all());
+        return Guest::all();
     }
-
-    public function show($id): JsonResponse
+    public function show($id): Guest|array
     {
         $guest = Guest::find($id);
 
         if (!$guest) {
-            return response()->json(['message' => 'Guest not found'], 404);
+            return ['message' => 'Guest not found'];
         }
 
-        return response()->json($guest);
+        return $guest;
     }
 
-    public function store(StoreGuestRequest $request): JsonResponse
+    public function store(StoreGuestRequest $request): Guest|array
     {
         try {
             $validated = $request->validated();
@@ -41,17 +40,18 @@ class GuestService implements GuestServiceInterface
 
             $guest->save();
 
-            return response()->json($guest, 201);
+            return $guest;
         } catch (ValidationException $e) {
 
-            return response()->json([
+            return [
                 'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 422);
+                'errors' => $e->errors(),
+                'code' => $e->getStatusCode()
+            ];
         }
     }
 
-    public function update(UpdateGuestRequest $request, $id)
+    public function update(UpdateGuestRequest $request, $id): Guest|array
     {
         try {
             $validated = $request->validated();
@@ -65,27 +65,26 @@ class GuestService implements GuestServiceInterface
 
             $guest->save();
 
-            return response()->json($guest);
+            return $guest;
         } catch (ValidationException $e) {
 
-            return response()->json([
+            return [
                 'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 422);
+                'errors' => $e->errors(),
+                'code' => $e->getStatusCode()
+            ];
         }
     }
 
-    public function destroy($id)
+    public function destroy($id): array|null
     {
         $guest = Guest::find($id);
 
         if (!$guest) {
-            return response()->json(['message' => 'Guest not found'], 404);
+            return ['message' => 'Guest not found'];
         }
 
-        $guest->delete();
-
-        return response()->json(null, 204);
+       return $guest->delete();
     }
 
 }

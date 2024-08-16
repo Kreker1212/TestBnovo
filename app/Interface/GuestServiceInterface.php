@@ -4,18 +4,19 @@ namespace App\Interface;
 
 use App\Http\Requests\StoreGuestRequest;
 use App\Http\Requests\UpdateGuestRequest;
-use Illuminate\Http\JsonResponse;
+use App\Models\Guest;
+use Illuminate\Database\Eloquent\Collection;
 
 interface GuestServiceInterface
 {
-    public function index(): JsonResponse;
+    public function index(): Collection;
 
-    public function show($id): JsonResponse;
+    public function show($id): Guest|array;
 
-    public function store(StoreGuestRequest $request): JsonResponse;
+    public function store(StoreGuestRequest $request): Guest|array;
 
-    public function update(UpdateGuestRequest $request, $id);
+    public function update(UpdateGuestRequest $request, $id): Guest|array;
 
-    public function destroy($id);
+    public function destroy($id): array|null;
 
 }
