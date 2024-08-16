@@ -56,7 +56,12 @@ class GuestService implements GuestServiceInterface
         try {
             $validated = $request->validated();
 
-            $guest = Guest::findOrFail($id);
+            $guest = Guest::find($id);
+
+            if (!$guest) {
+                return ['message' => 'Guest not found'];
+            }
+
             $guest->fill($validated);
 
             if (empty($guest->country)) {
@@ -76,7 +81,7 @@ class GuestService implements GuestServiceInterface
         }
     }
 
-    public function destroy($id): array|null
+    public function destroy($id): array|bool
     {
         $guest = Guest::find($id);
 
@@ -86,5 +91,4 @@ class GuestService implements GuestServiceInterface
 
        return $guest->delete();
     }
-
 }

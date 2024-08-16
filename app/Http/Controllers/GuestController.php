@@ -39,8 +39,6 @@ class GuestController extends Controller
 
     public function destroy(int $id): JsonResponse
     {
-        $this->service->destroy($id);
-
-        return response()->json(null, 204);
+        return response()->json($this->service->destroy($id));
     }
 }

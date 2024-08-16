@@ -17,6 +17,6 @@ interface GuestServiceInterface
 
     public function update(UpdateGuestRequest $request, $id): Guest|array;
 
-    public function destroy($id): array|null;
+    public function destroy($id): array|bool;
 
 }
